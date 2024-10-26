@@ -1,0 +1,69 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+.logo{
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo img{
+    width: 35%;
+    border: 3px solid white;
+    border-radius: 50px;
+}
+
+.navbar{
+    /* flex - element direction row */
+    display: flex;  
+}
+
+.nav-list{
+    width: 50%;
+    /* background-color: red; */
+    display: flex;
+    /* justify-content: center; */
+    align-items: center; 
+
+}
+
+.nav-list li{
+    /* to remove list . */
+    list-style: none;
+    padding: 26px 30px;
+
+}
+
+.nav-list li a{
+    /* to remove underline */
+    text-decoration: none;
+    color: white;
+}
+
+.nav-list li a:hover{
+    /* to remove underline */
+    color: rgb(227, 81, 13);
+}
+
+.rightNav{
+    /* background-color: brown; */
+    width: 50%;
+    text-align: right ;
+}
+
+#search{
+    padding: 5px;
+    font-size: 17px;
+    border: 2px solid gray;
+    border-radius: 9px;
+}
+
+.background{
+    background: rgba(0,0,0,0.7) url(../images/RISCV_Backgraound.jpeg);
+    background-size: cover;
+    background-blend-mode:darken;
+}

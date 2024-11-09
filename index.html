@@ -1,28 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <title>PRAN - Touch of life in machine</title>
 </head>
+
 <body>
     <!-- nav.navbar -->
     <nav class="navbar background">
         <!-- ul.nav-list.another -->
         <ul class="nav-list">
             <!-- li{a} , li*4 , dev.logo , img-->
-            <dev class="logo"><img src="images/pran.jpeg" alt="logo"></dev>
+            <dev class="logo"><img src="images/logo_pran_crop.jpeg" alt="logo"></dev>
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#contact">Contact Us</a></li>
         </ul>
-        <dev class="rightNav">
+        <div class="rightNav">
             <!-- input -->
-            <input type="text" name = "search" id = "search">
+            <input type="text" name="search" id="search">
             <button class="btn btn-sm">Search</button>
-        </dev>
+        </div>
     </nav>
+
+    <section class="background firstSection">
+        <div class="box-main">
+            <div class="firstHalf">
+                <p class="text-big">Risc V is The Future!</p>
+                <p class="text-small">RISC-V is an open-source and free architecture standard.
+                    Just as we see many software companies thriving because the software stack is free and open-source,
+                    RISC-V has made hardware architecture free and open-source, allowing anyone to develop hardware.
+                    This innovation positions RISC-V as the future of computing.
+                </p>
+                <div class="buttons">
+                    <button class="btn">Subscribe</button>
+                    <button class="btn">Watch Video</button>
+                </div>
+            </div>
+            <div class="secondHalf">
+                <img src="images/Designer_logo_pran.jpeg" alt="Pran logo">
+            </div>
+        </div>
+
+    </section>
+
+<hr>
+    <section class="section section-Left">
+        <div class="paras">
+            <p class="sectionTag text-mid">What is Risc-V?</p>
+            <p class="sectionSubTag text-small">CPU design requires design expertise in several specialties: electronic
+                digital logic, compilers, and operating systems. To cover the costs of such a team, commercial vendors
+                of processor intellectual property (IP), such as Arm Ltd. and MIPS Technologies, charge royalties for
+                the use of their designs and patents. They also often require non-disclosure agreements
+                before releasing documents that describe their designs' detailed advantages. In many cases, they never
+                describe the reasons for their design choices.
+
+                RISC-V was begun with a goal to make a practical ISA that was open-sourced, usable academically, and
+                deployable in any hardware or software design without royalties. Also, justifying rationales
+                for each design decision of the project are explained, at least in broad terms. The RISC-V authors are
+                academics who have substantial experience in computer design, and the RISC-V ISA is a direct development
+                from a series of academic computer-design projects, especially Berkeley RISC. RISC-V was originated in
+                part to aid all such projects
+
+            </p>
+        </div>
+        <div class="risc-v">
+            <img src="images/RISC-V-logo.png" alt="imgRiscV" class="imgFluid">
+        </div>
+    </section>
+
+
+    <!-- <section class="section section-Up">
+        <div class="paras">
+            <p class="sectionTag text-mid">first Step : Single Cycle Risc-V CPU Microarchitecture</p>
+            <p class="sectionSubTag text-small">Ls a RISC architecture, the RISC-V ISA is a load-store architecture. Its
+                floating-point instructions use IEEE 754 floating-point. Notable features of the RISC-V ISA include:
+                instruction bit field locations chosen to simplify the use of multiplexers in a CPU, a design
+                that is architecturally neutral, and a fixed location for the sign bit of immediate
+                values to speed up sign extension.
+
+                The instruction set is designed for a wide range of uses. The base instruction set has a fixed length of
+                32-bit naturally aligned instructions, and the ISA supports variable length extensions where each
+                instruction can be any number of 16-bit parcels in length.Extensions support small embedded
+                systems, personal computers, supercomputers with vector processors, and warehouse-scale parallel
+                computers.
+
+
+            </p>
+        </div>
+        <div class="micro-archi">
+            <img src="images/micro-archi-pran.jpg" alt="cpu archi" class="single-cycle-cpu">
+        </div>
+    </section> -->
+
+
+    <section class="section">
+        <div class="paras">
+            <p class="sectionTag text-mid">Power of RISC-V Architecture for Next-generation</p>
+            <p class="sectionSubTag text-small">
+                The PRAN CPU Series is a cutting-edge RISC-V processor line designed for versatility, ranging from
+                single-cycle to out-of-order execution CPUs, within a high-performance heterogeneous SoC. By leveraging
+                the latest RISC-V RVA23 profile, PRAN integrates advanced features like vector operations, atomic
+                instructions, and floating-point support, optimizing it for AI, machine learning, and data center
+                applications. It includes enhanced virtualization and safety protocols suitable for automotive and
+                industrial standards. As an open-hardware initiative, PRAN fosters innovation through industry
+                partnerships and global contributions, pushing the boundaries of shared knowledge in high-performance
+                computing.
+            </p>
+        </div>
+        <div class="thumbnail">
+            <img src="images/logo_pran_crop.jpeg" alt="cpu archi" class="imgFluid">
+        </div>
+    </section>
+<hr>
+    <section class="contact">
+        <h2 class="text-center"> Contact Us</h2>
+        <div class="form">
+            <input class="form-input" type="text" name="name" id="name" placeholder="Enter your name">
+            <input class="form-input" type="text" name="name" id="name" placeholder="Enter your Phone">
+            <input class="form-input" type="text" name="name" id="name" placeholder="Enter your email">
+            <textarea class="form-input" name="text" id="text" cols="30" rows="10" placeholder="Elaborate your concern"></textarea>
+            <button class="btn dark-btn">Submit</button>
+        </div>
+    </section>
+
+    <footer class="background">
+        <p class="text-footer">
+            Copyright &copy; 2027 - All rights reserved
+        </p>
+    </footer>
 </body>
+
 </html>

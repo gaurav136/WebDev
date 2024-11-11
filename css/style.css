@@ -75,7 +75,7 @@
 }
 
 .background {
-    background: rgba(0, 0, 0, 0.7) url(../images/RISCV_Backgraound.jpeg);
+    background: rgba(0, 0, 0, 0.7) url(../images/RISCV_Backgraound.jpeg) center top;
     background-size: cover;
     background-blend-mode: darken;
 }
@@ -186,7 +186,7 @@
 
 .risc-v img {
     width: 350px;
-    padding: 72px;
+    padding: 72px 0 0 0;
 }
 
 .micro-archi img {

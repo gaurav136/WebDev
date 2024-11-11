@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <title>PRAN - Touch of life in machine</title>
+
 </head>
 
 <body>
     <!-- nav.navbar -->
-    <nav class="navbar background">
+    <nav class="navbar background h-nav-resp">
         <!-- ul.nav-list.another -->
-        <ul class="nav-list">
+        <ul class="nav-list v-class-resp">
             <!-- li{a} , li*4 , dev.logo , img-->
             <dev class="logo"><img src="images/logo_pran_crop.jpeg" alt="logo"></dev>
             <li><a href="#home">Home</a></li>
@@ -20,10 +21,15 @@
             <li><a href="#services">Services</a></li>
             <li><a href="#contact">Contact Us</a></li>
         </ul>
-        <div class="rightNav">
+        <div class="rightNav v-class-resp">
             <!-- input -->
             <input type="text" name="search" id="search">
             <button class="btn btn-sm">Search</button>
+        </div>
+        <div class="burger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
         </div>
     </nav>
 
@@ -60,11 +66,7 @@
                 describe the reasons for their design choices.
 
                 RISC-V was begun with a goal to make a practical ISA that was open-sourced, usable academically, and
-                deployable in any hardware or software design without royalties. Also, justifying rationales
-                for each design decision of the project are explained, at least in broad terms. The RISC-V authors are
-                academics who have substantial experience in computer design, and the RISC-V ISA is a direct development
-                from a series of academic computer-design projects, especially Berkeley RISC. RISC-V was originated in
-                part to aid all such projects
+                deployable in any hardware or software design without royalties.
 
             </p>
         </div>
@@ -116,7 +118,7 @@
             <img src="images/logo_pran_crop.jpeg" alt="cpu archi" class="imgFluid">
         </div>
     </section>
-<hr>
+
     <section class="contact">
         <h2 class="text-center"> Contact Us</h2>
         <div class="form">
@@ -130,9 +132,12 @@
 
     <footer class="background">
         <p class="text-footer">
-            Copyright &copy; 2027 - All rights reserved
+            Copyright &copy; 2027 - www.pran.com - All rights reserved
         </p>
     </footer>
+
+    <script src="js/resp.js"></script>
+
 </body>
 
 </html>

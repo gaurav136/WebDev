@@ -27,10 +27,11 @@
     position: sticky;
     top: 0;
     cursor: pointer;
+    
 }
 
 .nav-list {
-    width: 50%;
+    width: 60%;
     /* background-color: red; */
     display: flex;
     /* justify-content: center; */
@@ -60,7 +61,7 @@
 
 .rightNav {
     /* background-color: brown; */
-    width: 50%;
+    width: 40%;
     text-align: right;
     padding: 0 30px;
 }
@@ -70,7 +71,7 @@
     font-size: 17px;
     border: 2px solid gray;
     border-radius: 9px;
-    margin: 0 10px;
+    /* margin: 0 10px; */
 }
 
 .background {
@@ -91,7 +92,7 @@
     font-family: 'Courier New', Courier, monospace;
     max-width: 60%;
     margin: auto;
-    height: 80%;
+    height: 100%;
 
 }
 
@@ -144,7 +145,7 @@
 }
 
 .section {
-    height: 447px;
+    /* height: 447px; */
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -161,11 +162,11 @@
     flex-direction: row-reverse;
 }
 
-.section-Up {
+/* .section-Up {
     flex-direction: column;
     padding-top: 450px;
     padding-bottom: 450px;
-}
+} */
 
 .text-mid {
     font-size: 40px;
@@ -185,6 +186,7 @@
 
 .risc-v img {
     width: 350px;
+    padding: 72px;
 }
 
 .micro-archi img {
@@ -212,7 +214,7 @@
 }
 
 .form {
-    max-width: 1200px;
+    max-width: 62%;
     margin: 25px auto;
 }
 
@@ -237,4 +239,68 @@
     font-family: "Ubuntu", sans-serif;
     font-size: 18px;
     color: white;
+}
+
+.burger{
+    display: none;
+    position: absolute;
+    cursor: pointer;
+    right: 5%;
+    top :15px;
+
+}
+
+.line{
+    width: 33px;
+    height: 3px;
+    margin: 5px;
+    background-color: white;
+}
+
+@media only screen and (max-width:1140px){
+    .nav-list{
+        flex-direction: column;
+    }
+    .navbar{
+        flex-direction: column;
+        transition: all 0.3s ease-out;
+        height: 450px;
+    }
+    .rightNav{
+        text-align: center;   
+    }
+    #search{
+        width: 100%;
+        padding: 10px 0px;
+        margin-left: auto;
+    }
+
+    .box-main{
+        flex-direction: column-reverse;
+        max-width: 100%;
+    }
+
+    .burger{
+        display: block;
+    }
+
+    .h-nav-resp{
+        height : 62px;
+    }
+
+    .v-class-resp{
+        opacity: 0;
+    }
+
+    .firstSection {
+        height: 110vh;
+    }
+
+    .section{
+        flex-direction: column-reverse;
+    }
+
+    .secondHalf{
+        padding: 20px;
+    }
 }

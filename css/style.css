@@ -81,6 +81,12 @@
     background-blend-mode: darken;
 }
 
+.background_contact {
+    background: rgba(0, 0, 0, 0.7) url(../images/xkalp_rs=w_1920\,m.jpeg) center top;
+    background-size: cover;
+    background-blend-mode: darken;
+}
+
 .firstSection {
     height: 100vh;
 }
@@ -224,8 +230,11 @@
     padding: 9px 12px;
     width: 100%;
     font-size: 25px;
-    border: 2px solid gray;
+    border: 2px solid rgb(33, 32, 32);
     border-radius: 6px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    color: #0b0606;
+    background: rgba(255,255,255,0.4); /* Faint transparent white */
 }
 
 .dark-btn {

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyWater 130nm PDK & Magic VLSI Installation Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Calm Harmony -->
+    <!-- Application Structure Plan: A single-page, vertically scrolling documentation with a fixed table of contents for quick navigation. The content is divided into logical sections: Introduction, Prerequisites, Step-by-Step Installation (covering Magic and PDK), Configuration, Verification, and a Basic Usage Example. This linear flow is designed for easy comprehension, guiding the user through the installation process from start to finish. Code blocks are clearly demarcated for commands. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Installation Steps & Commands -> Goal: Inform -> Viz: Structured text with code blocks (HTML/Tailwind) -> Interaction: None (static documentation) -> Justification: Provides clear, copy-pastable instructions.
+        - Report Info: PDK/Tool Relationship -> Goal: Inform -> Viz: Explanatory text -> Interaction: None -> Justification: Contextualizes the installation steps.
+        - Report Info: Verification steps -> Goal: Inform -> Viz: Textual output examples -> Interaction: None -> Justification: Guides user to confirm success.
+        - Report Info: Basic Usage (Tcl Script) -> Goal: Inform/Demonstrate -> Viz: Tcl script in code block -> Interaction: None (static script) -> Justification: Provides a practical starting point.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        .code-block {
+            background-color: #f1f5f9; /* slate-100 */
+            color: #1e293b; /* slate-800 */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        .toc-link.active {
+            font-weight: 600;
+            color: #3b82f6; /* blue-500 */
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-slate-800">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold text-blue-600">SkyWater 130nm PDK Guide</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#introduction" class="text-slate-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Intro</a>
+                        <a href="#prerequisites" class="text-slate-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Prereqs</a>
+                        <a href="#installation" class="text-slate-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Install</a>
+                        <a href="#configuration" class="text-slate-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Config</a>
+                        <a href="#verification" class="text-slate-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Verify</a>
+                        <a href="#basic-usage" class="text-slate-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Usage</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+
+        <section id="introduction" class="mb-16 scroll-mt-20">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 text-center mb-6">SkyWater 130nm PDK & Magic VLSI Installation Guide</h1>
+            <p class="max-w-3xl mx-auto text-lg text-slate-600 text-center mb-8">
+                This document provides a comprehensive, step-by-step guide to installing the open-source SkyWater 130nm Process Design Kit (PDK) and integrating it with Magic VLSI, a powerful open-source layout tool. The SkyWater 130nm PDK is a fully open-source technology, enabling accessible and collaborative chip design. By following these instructions, you will set up your environment to create and verify custom layouts using industry-standard processes.
+            </p>
+        </section>
+
+        <section id="prerequisites" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6">1. Prerequisites</h2>
+            <p class="text-slate-600 mb-4">Before proceeding with the installation, ensure your system meets the following requirements and has the necessary tools installed. These instructions are primarily for **Ubuntu/Debian-based Linux distributions**.</p>
+            <div class="bg-white p-6 rounded-lg shadow-lg space-y-4">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Operating System:</h3>
+                    <ul class="list-disc list-inside text-slate-600">
+                        <li>Linux (Ubuntu/Debian recommended)</li>
+                        <li>For Windows users: Windows Subsystem for Linux (WSL) is highly recommended.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Disk Space:</h3>
+                    <p class="text-slate-600">The SkyWater 130nm PDK is large. Allocate at least **40-50 GB** of free disk space for the PDK and associated tools.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Essential Tools & Libraries:</h3>
+                    <p class="text-slate-600 mb-2">Update your package list and install common build tools and libraries:</p>
+                    <pre class="code-block"><code>sudo apt update
+sudo apt upgrade
+sudo apt install -y git build-essential flex bison m4 tcsh csh libx11-dev tcl-dev tk-dev libcairo2-dev libncurses-dev libglu1-mesa-dev mesa-common-dev python3 python3-pip</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="installation" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6">2. Step-by-Step Installation</h2>
+            <p class="text-slate-600 mb-4">This section guides you through installing Magic VLSI from source and then using `volare` to install and manage the SkyWater 130nm PDK.</p>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg space-y-6">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-3">2.1. Install Magic VLSI (from Source)</h3>
+                    <p class="text-slate-600 mb-2">It's recommended to install the latest version of Magic directly from its GitHub repository for best compatibility with the PDK.</p>
+                    <pre class="code-block"><code># Clone the Magic VLSI repository
+git clone https://github.com/RTimothyEdwards/magic.git git_magic
+cd git_magic
+
+# Configure, compile, and install Magic
+./configure
+make -j$(nproc) # Use -j followed by the number of CPU cores for faster compilation
+sudo make install
+
+# Navigate back to your home directory or desired working directory
+cd ..</code></pre>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-semibold mb-3">2.2. Install SkyWater 130nm PDK using `volare`</h3>
+                    <p class="text-slate-600 mb-2">`volare` is a Python-based tool that simplifies the process of downloading and configuring open-source PDKs.</p>
+
+                    <h4 class="text-xl font-semibold mb-2">a. Install `volare` Python Package:</h4>
+                    <pre class="code-block"><code>pip install volare</code></pre>
+
+                    <h4 class="text-xl font-semibold mb-2">b. Define `PDK_ROOT` Environment Variable:</h4>
+                    <p class="text-slate-600 mb-2">This variable tells `volare` and other EDA tools where the PDK files are located. It's crucial to set this permanently.</p>
+                    <pre class="code-block"><code># Set PDK_ROOT for the current session
+export PDK_ROOT="$HOME/pdk"
+mkdir -p $PDK_ROOT
+
+# Add to .bashrc for permanent setting (open a new terminal after this)
+echo 'export PDK_ROOT="$HOME/pdk"' >> ~/.bashrc
+source ~/.bashrc</code></pre>
+
+                    <h4 class="text-xl font-semibold mb-2">c. List Available SkyWater 130nm Releases:</h4>
+                    <p class="text-slate-600 mb-2">This command shows the available versions of the PDK, identified by a Git commit hash. Choose a recent, stable one.</p>
+                    <pre class="code-block"><code>volare ls-remote --pdk sky130</code></pre>
+                    <p class="text-slate-600 mt-2">Example output (hashes will vary):</p>
+                    <pre class="code-block"><code>Pre-built sky130 PDK versions
+├── 44a43c23c81b45b8e774ae7a84899a5a778b6b0b (2022.08.16) (enabled)
+├── e8294524e5f67c533c5d0c3afa0bcc5b2a5fa066 (2022.07.29)
+└── ...</code></pre>
+
+                    <h4 class="text-xl font-semibold mb-2">d. Enable (Install) a Specific PDK Release:</h4>
+                    <p class="text-slate-600 mb-2">Replace `<commit_hash>` with the hash you chose from the previous step. This will download and set up the PDK.</p>
+                    <pre class="code-block"><code>volare enable --pdk sky130 &lt;commit_hash&gt;
+# Example: volare enable --pdk sky130 cd1748bb197f9b7af62a54507de6624e30363943</code></pre>
+                    <p class="text-slate-600 mt-2">This step can take a considerable amount of time depending on your internet speed, as it downloads several gigabytes of data.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="configuration" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6">3. Configuring Magic for SkyWater 130nm</h2>
+            <p class="text-slate-600 mb-4">Once the PDK is installed, you need to tell Magic where to find the technology files (`sky130A.magicrc`) that define all the layers, design rules, and other process-specific information.</p>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg space-y-6">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-3">3.1. Create a Project Directory:</h3>
+                    <p class="text-slate-600 mb-2">It's good practice to create a dedicated directory for your design files. Magic will look for its configuration file (`.magicrc`) in the directory where it's launched.</p>
+                    <pre class="code-block"><code>mkdir -p ~/my_sky130_designs/magic_layouts
+cd ~/my_sky130_designs/magic_layouts</code></pre>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-semibold mb-3">3.2. Create a Symbolic Link to the Magic Configuration File:</h3>
+                    <p class="text-slate-600 mb-2">This link tells Magic to use the SkyWater 130nm technology when you launch it from this directory.</p>
+                    <pre class="code-block"><code>ln -s $PDK_ROOT/sky130A/libs.tech/magic/sky130A.magicrc .magicrc</code></pre>
+                    <p class="text-slate-600 mt-2">This command creates a hidden file named `.magicrc` in your current directory, pointing to the actual PDK configuration file installed by `volare`.</p>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-semibold mb-3">3.3. Launch Magic:</h3>
+                    <p class="text-slate-600 mb-2">Now, simply launch Magic from your project directory.</p>
+                    <pre class="code-block"><code>magic</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="verification" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6">4. Verification</h2>
+            <p class="text-slate-600 mb-4">After launching Magic, verify that the SkyWater 130nm PDK has been loaded successfully.</p>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg space-y-4">
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Check Magic Console Output:</h3>
+                    <p class="text-slate-600 mb-2">Look for a line similar to this at the beginning of Magic's console output:</p>
+                    <pre class="code-block"><code>Using technology "sky130A", version X.X</code></pre>
+                    <p class="text-slate-600 mt-2">If you see `Using technology "minimum"`, it means the PDK's technology file was not loaded. Re-check the `PDK_ROOT` environment variable and the symbolic link creation in the previous steps.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-2">Verify with `tech help` Command:</h3>
+                    <p class="text-slate-600 mb-2">Inside the Magic command prompt (the Tcl console window), type:</p>
+                    <pre class="code-block"><code>:tech help</code></pre>
+                    <p class="text-slate-600 mt-2">You should see `sky130A` listed as an available technology. This confirms Magic recognizes the PDK.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="basic-usage" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-6">5. Basic Usage Example (Tcl Script)</h2>
+            <p class="text-slate-600 mb-4">Now that your environment is set up, let's run a simple Tcl script to create a basic layout using SkyWater 130nm layers. This script will draw an inverter.</p>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg space-y-4">
+                <h3 class="text-xl font-semibold mb-2">Create the Tcl Script (`inverter.tcl`):</h3>
+                <p class="text-slate-600 mb-2">Save the following content into a file named `inverter.tcl` in your `~/my_sky130_designs/magic_layouts` directory:</p>
+                <pre class="code-block"><code># This script creates a simple inverter layout using SkyWater 130nm layers.
+
+# Define a procedure to create and draw a simple inverter
+proc create_inverter {cell_name} {
+    # Create a new cell
+    puts "Creating cell: $cell_name"
+    load $cell_name new
+
+    # Ensure sky130A technology is loaded
+    if {![info exists ::tech::current]} {
+        if {[catch {tech sky130A} errMsg]} {
+            puts "ERROR: Failed to load 'sky130A' technology. Reason: $errMsg"
+            puts "Please ensure SkyWater 130nm PDK is correctly installed and configured."
+            puts "Exiting script due to technology loading failure."
+            exit 1
+        }
+        puts "Successfully loaded 'sky130A' technology."
+    } elseif {$::tech::current ne "sky130A"} {
+        puts "Warning: Current technology is '$::tech::current', not 'sky130A'. Attempting to switch."
+        if {[catch {tech sky130A} errMsg]} {
+            puts "ERROR: Failed to switch to 'sky130A' technology. Reason: $errMsg"
+            puts "Exiting script due to technology switching failure."
+            exit 1
+        }
+        puts "Successfully switched to 'sky130A' technology."
+    }
+
+    # Define some common SkyWater 130nm layer names
+    set NDIFF "ndiff"
+    set PDIFF "pdiff"
+    set POLY "poly"
+    set LI1 "li1"        ; # Local Interconnect 1
+    set M1 "met1"        ; # Metal 1
+    set VIA "via"        ; # Via between LI1 and M1
+    set CONT "contact"   ; # Contact between diffusion/poly and LI1
+
+    # NMOS Transistor (simplified)
+    # N-diffusion
+    box 0 0 1 1.5
+    paint $NDIFF
+    box 2 0 3 1.5
+    paint $NDIFF
+    # Poly gate
+    box 0.5 -0.25 2.5 1.75
+    paint $POLY
+    # Contacts to N-diffusion
+    box 0.25 0.25 0.75 0.75
+    paint $CONT
+    box 2.25 0.25 2.75 0.75
+    paint $CONT
+    # Local interconnect 1 over contacts
+    box 0.25 0.25 0.75 0.75
+    paint $LI1
+    box 2.25 0.25 2.75 0.75
+    paint $LI1
+
+    # PMOS Transistor (simplified)
+    # P-diffusion
+    box 0 3 1 4.5
+    paint $PDIFF
+    box 2 3 3 4.5
+    paint $PDIFF
+    # Poly gate (shared with NMOS)
+    box 0.5 2.75 2.5 4.75
+    paint $POLY
+    # Contacts to P-diffusion
+    box 0.25 3.25 0.75 3.75
+    paint $CONT
+    box 2.25 3.25 2.75 3.75
+    paint $CONT
+    # Local interconnect 1 over contacts
+    box 0.25 3.25 0.75 3.75
+    paint $LI1
+    box 2.25 3.25 2.75 3.75
+    paint $LI1
+
+    # Connect Poly gates (Input)
+    box 1 1.5 2 3
+    paint $POLY
+
+    # Connect to Metal 1 (VDD, GND, Output)
+    # VDD (top)
+    box -0.5 4.25 3.5 4.75
+    paint $M1
+    label VDD -0.5 4.5 $M1
+    # GND (bottom)
+    box -0.5 -0.5 3.5 0
+    paint $M1
+    label GND -0.5 -0.25 $M1
+    # Output (between NMOS and PMOS)
+    box 0.25 1.25 0.75 3.25
+    paint $M1
+    label OUT 0.5 2.25 $M1
+    # Input
+    box 1 1.75 2 2.75
+    paint $M1
+    label IN 1.5 2.25 $M1
+
+    # Add vias/contacts to connect layers
+    box 0.25 0.25 0.75 0.75
+    paint $VIA ; # Connect LI1 to M1
+    box 2.25 0.25 2.75 0.75
+    paint $VIA
+    box 0.25 3.25 0.75 3.75
+    paint $VIA
+    box 2.25 3.25 2.75 3.75
+    paint $VIA
+
+    # Save the cell
+    puts "Saving cell: $cell_name"
+    save $cell_name
+}
+
+# --- Main execution flow ---
+
+# Call the procedure to create an inverter cell
+create_inverter "sky130_inverter"
+
+# Load the newly created cell to make it current
+load sky130_inverter
+
+# Perform extraction on the current cell
+puts "Performing extraction..."
+extract all
+extract write spice {current_cell}.spice
+puts "Extraction complete. Netlist saved to {current_cell}.spice"
+
+# Fit the view to the current cell
+fit
+
+puts "Script finished successfully!"
+```</pre>
+                <h3 class="text-xl font-semibold mb-2">Run the Script in Magic:</h3>
+                <p class="text-slate-600 mb-2">With Magic open and running in your `~/my_sky130_designs/magic_layouts` directory, type the following command in the Magic Tcl console:</p>
+                <pre class="code-block"><code>:source inverter.tcl</code></pre>
+                <p class="text-slate-600 mt-2">Magic will execute the script, create the `sky130_inverter.mag` layout file, and generate a `sky130_inverter.spice` netlist. You should see the inverter layout appear in the Magic layout window.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-800 text-white">
+        <div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8 text-center">
+            <p>This guide is based on official documentation and community best practices for open-source VLSI tools.</p>
+            <p class="mt-2">For further support, refer to the <a href="https://github.com/google/skywater-pdk" target="_blank" class="text-blue-400 hover:underline">SkyWater PDK GitHub</a> and <a href="http://opencircuitdesign.com/magic/" target="_blank" class="text-blue-400 hover:underline">Magic VLSI website</a>.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

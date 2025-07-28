@@ -28,7 +28,7 @@
     position: sticky;
     top: 0;
     cursor: pointer;
-    
+    z-index: 1000; /* Ensure navbar is always on top */
 }
 
 .nav-list {
@@ -209,8 +209,56 @@
 }
 
 .contact {
-    background-color: rgb(237, 241, 245);
-    height: 824px;
+    background-color: transparent;
+    height: 824px; /* or your preferred height */
+    padding: 0;
+    position: relative;
+}
+
+.connect-heading {
+    text-align: center;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 37px;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 32px 0 18px 0;
+    border-bottom: 2px solid #e0e0e0;
+    width: 100%;
+    background: rgba(255,255,255,0.15);
+    box-sizing: border-box;
+    z-index: 1; /* Lower than navbar */
+    position: relative;
+}
+
+/* Center social links absolutely in the section */
+.social-links {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    width: 80%;
+    z-index: 1; /* Lower than navbar */
+}
+
+.social-links a img {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    transition: transform 0.2s, box-shadow 0.2s;
+    padding: 8px;
+}
+
+.social-links a:hover img {
+    transform: scale(1.12) rotate(-5deg);
+    box-shadow: 0 4px 24px rgba(33,33,33,0.18);
+    background: #f5f5f5;
 }
 
 .text-center {
